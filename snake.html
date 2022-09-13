@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>snake</title>
+</head>
+<body>
+    
+    <body>
+        <h1>SNAKE GAME</h1>
+        
+   <canvas id="stage" width="400" height="400"></canvas>
+   <script type="text/javascript">
+        
+    window.onload = function(){
+        var stage = document.getElementById('stage');
+       
+        var ctx =  stage.getContext("2d");
+       
+        document.addEventListener("keydown", keyPush);
+       
+        setInterval(game, 500);
+        
+        const vel = 1;
+    
+        var vX = vY = 0;
+        var pX = 10;
+        var pY = 15;
+        var tPeca = 20;
+        var qPeca = 20;
+        var mX=mY=15;
+    
+        var trail = [];
+        tail = 2;
+    
+        
+    
+        function game(){
+    
+            pX += vX;
+            pY += vY;
+            if (pX <0) {
+                pX = qPeca - 1;    
+            }
+            if (pX > qPeca - 1) {
+                pX = 0;
+            }
+            if (pY < 0) {
+                pY = qPeca - 1;
+            }
+            if (pY > 0) {
+                pY = qPeca - 1;
+            }
+            if (pY > qPeca) {
+                pY = 0;
+            }
+    
+            ctx.fillStyle = "gray";
+            ctx.fillRect(0,0, stage.width, stage.height);
+    
+            ctx.fillStyle = "red";
+            ctx.fillRect(mX*tPeca, mY*tPeca, tPeca,tPeca);
+    
+            ctx.fillStyle = "black";
+            for (var i = 0; i < trail.length; i++) {
+                ctx.fillRect(trail[i].x*tPeca, trail[i].y*tPeca, tPeca-1,tPeca-1);
+                if (trail[i].x == pX && trail[i].y == pY) {
+                    vX=vY = 0;
+                    tail =2;
+                }
+         }
+    
+         trail.push({x:pX, y:pY})
+         while (trail.length > tail){
+            trail.shift();
+         }
+         
+         if (mX == pX && mY == pY){
+            tail++;
+            mX = Math.floor(Math.random()*qPeca);
+            mY = Math.floor(Math.random()*qPeca);
+         }
+    
+    
+        }
+    
+        function keyPush (event){
+            switch (event.keyCode){
+        
+                case 37: //left
+                  vX = -vel;
+                  vY = 0;
+                  break;
+                
+                case 38: //up
+                  vX = 0;
+                  vY = -vel;
+                  break;
+    
+                case 39: //rigth
+                  vX = vel;
+                  vY = 0;
+                  break;
+      
+                case 40: //down
+                  vX = 0;
+                  vY = vel;
+                  break;
+
+                case 65: //left
+                  vX = -vel;
+                  vY = 0;
+                  break;
+                
+                case 87: //up
+                  vX = 0;
+                  vY = -vel;
+                  break;
+    
+                case 68: //rigth
+                  vX = vel;
+                  vY = 0;
+                  break;
+      
+                case 83: //down
+                  vX = 0;
+                  vY = vel;
+                  break;
+                  default:
+                    break;
+                
+                
+            }
+        } 
+        }
+    </script>
+    
